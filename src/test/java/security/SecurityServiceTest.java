@@ -22,39 +22,6 @@ class SecurityServiceTest {
     private SecurityService securityService = new SecurityService();
 
     @Test
-    @DisplayName("test Generate Cookie")
-    void testGenerateCookie() {
-        Cookie cookie = securityService.generateCookie();
-
-        assertEquals("user-token", cookie.getName());
-        assertDoesNotThrow(() -> UUID.fromString(cookie.getValue()));
-    }
-
-    @Test
-    @DisplayName("test Is Auth True After User Logged In")
-    void testIsAuthTrueAfterUserLoggedIn() {
-        Cookie[] cookies = {securityService.generateCookie(), securityService.generateCookie()};
-
-        assertTrue(securityService.isAuth(cookies));
-    }
-
-    @Test
-    @DisplayName("test IsAuth False When User Not Logged In")
-    void testIsAuthFalseWhenUserNotLoggedIn() {
-        Cookie[] cookies = new Cookie[0];
-
-        assertFalse(securityService.isAuth(cookies));
-    }
-
-    @Test
-    @DisplayName("test IsAuth False When Cookies Is Null")
-    void testIsAuthFalseWhenCookiesIsNull() {
-        Cookie[] cookies = null;
-
-        assertFalse(securityService.isAuth(cookies));
-    }
-
-    @Test
     @DisplayName("test Generate Salt Returns Not Null Value")
     void testGenerateSaltReturnsNotNullValue() {
         assertNotNull(securityService.generateSalt());

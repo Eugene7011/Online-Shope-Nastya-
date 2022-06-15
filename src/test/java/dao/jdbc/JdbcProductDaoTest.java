@@ -1,6 +1,5 @@
 package dao.jdbc;
 
-import dao.jdbc.JdbcProductDao;
 import entity.Product;
 import org.junit.jupiter.api.Test;
 

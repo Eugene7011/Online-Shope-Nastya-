@@ -1,6 +1,5 @@
 package dao.jdbc.mapper;
 
-import entity.Product;
 import entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

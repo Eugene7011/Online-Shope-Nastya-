@@ -1,8 +1,6 @@
 package dao.jdbc.mapper;
 
-import dao.jdbc.mapper.ProductRowMapper;
 import entity.Product;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

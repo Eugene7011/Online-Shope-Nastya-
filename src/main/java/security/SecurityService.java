@@ -6,15 +6,18 @@ import jakarta.servlet.http.Cookie;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
+import service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 public class SecurityService {
-    private List<String> userTokens;
+    private List<String> userTokens = new ArrayList<>();
     private UserDao userDao;
+    private UserService userService;
 
     public void setPasswordAndSalt(User user, String password) {
         String salt = generateSalt();
@@ -33,24 +36,15 @@ public class SecurityService {
         return UUID.randomUUID().toString();
     }
 
-    public Cookie generateCookie() {
-        String userToken = UUID.randomUUID().toString();
-        userTokens.add(userToken);
-        return new Cookie("user-token", userToken);
+    public String login(String login, String password) {
+        if (isValidCredentials(login, password)) {
+            Cookie cookie = userService.generateCookie();
+            String token = cookie.getValue();
+            return token;
+        }
+        return null;
     }
 
-    public boolean isAuth(Cookie[] cookies) {
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("user-token")) {
-                    if (userTokens.contains(cookie.getValue())) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
 
     public boolean isValidCredentials(String login, String password) {
         return isValidCredentialsForTesting(password, userDao.search(login));

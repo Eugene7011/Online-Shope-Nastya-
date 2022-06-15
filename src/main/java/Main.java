@@ -7,10 +7,12 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import security.SecurityService;
 import service.ProductService;
+import service.UserService;
 import web.security.SecurityFilter;
 import web.servlets.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -24,18 +26,18 @@ public class Main {
 
         List<String> userTokens = new ArrayList<>();
 
-        SecurityService securityService = new SecurityService(userTokens, jdbcUserDao);
-        AddProductServlet addProductServlet = new AddProductServlet(productService);
-        SecurityFilter securityFilter = new SecurityFilter(securityService);
+        UserService userService = new UserService();
+        SecurityService securityService = new SecurityService(Collections.synchronizedList(userTokens), jdbcUserDao, userService);
+        SecurityFilter securityFilter = new SecurityFilter(securityService, userService);
 
-        context.addServlet(new ServletHolder(new AllProductsServlet(productService)), "/products");
         context.addServlet(new ServletHolder(new AllProductsServlet(productService)), "/*");
-        context.addServlet(new ServletHolder(addProductServlet), "/products/add");
+        context.addServlet(new ServletHolder(new AllProductsServlet(productService)), "/products");
+        context.addServlet(new ServletHolder(new AddProductServlet(productService)), "/products/add");
         context.addServlet(new ServletHolder(new DeleteProductServlet(productService)), "/products/delete");
         context.addServlet(new ServletHolder(new UpdateProductServlet(productService)), "/products/update");
         context.addServlet(new ServletHolder(new SearchProductServlet(productService)), "/products/search");
         context.addServlet(new ServletHolder(new LoginServlet(securityService)), "/login");
-        context.addFilter(new FilterHolder(securityFilter), "/products", EnumSet.of(DispatcherType.REQUEST));
+        context.addFilter(new FilterHolder(securityFilter), "/*", EnumSet.of(DispatcherType.REQUEST));
 
         Server server = new Server(8080);
         server.setHandler(context);
