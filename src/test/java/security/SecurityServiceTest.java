@@ -1,7 +1,6 @@
 package security;
 
 import dao.jdbc.JdbcUserDao;
-import dao.jdbc.UserDao;
 import entity.User;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.DisplayName;
@@ -17,10 +16,10 @@ import static org.mockito.Mockito.when;
 
 class SecurityServiceTest {
     private List<String> userTokens = new ArrayList<>();
-    User user = new User();
-    String login = "Email";
-    String password = "password";
-    SecurityService securityService = new SecurityService(userTokens);
+    private User user = new User();
+    private String login = "Email";
+    private String password = "password";
+    private SecurityService securityService = new SecurityService();
 
     @Test
     @DisplayName("test Generate Cookie")
@@ -115,7 +114,7 @@ class SecurityServiceTest {
         User userFromDB = new User(1, login, "765f8f982e00176d81befeed250d95c4", "29cbc6c9-d1c4-4455-82c9-d1d577cbc33b");
         when(jdbcUserDao.search(login)).thenReturn(userFromDB);
 
-        assertTrue(securityService.isValidCredentialsForTesting(login, password, jdbcUserDao.search(login)));
+        assertTrue(securityService.isValidCredentialsForTesting(password, jdbcUserDao.search(login)));
     }
 
 }

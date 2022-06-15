@@ -1,24 +1,18 @@
 package web.servlets;
 
-import dao.jdbc.JdbcUserDao;
-import entity.User;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import pagegenerator.PageGenerator;
 import security.SecurityService;
 
 import java.io.IOException;
-import java.util.List;
 
+@AllArgsConstructor
 public class LoginServlet extends HttpServlet {
-    private List<String> userTokens;
     private SecurityService securityService;
 
-    public LoginServlet(List<String> userTokens, SecurityService securityService) {
-        this.userTokens = userTokens;
-        this.securityService = securityService;
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

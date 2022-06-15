@@ -1,20 +1,20 @@
 package security;
 
-import dao.jdbc.JdbcUserDao;
+import dao.UserDao;
 import entity.User;
 import jakarta.servlet.http.Cookie;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class SecurityService {
     private List<String> userTokens;
-    JdbcUserDao jdbcUserDao = new JdbcUserDao();
-
-    public SecurityService(List<String> userTokens) {
-        this.userTokens = userTokens;
-    }
+    private UserDao userDao;
 
     public void setPasswordAndSalt(User user, String password) {
         String salt = generateSalt();
@@ -53,10 +53,10 @@ public class SecurityService {
     }
 
     public boolean isValidCredentials(String login, String password) {
-        return isValidCredentialsForTesting(login, password, jdbcUserDao.search(login));
+        return isValidCredentialsForTesting(password, userDao.search(login));
     }
 
-    public boolean isValidCredentialsForTesting(String login, String password, User userFromDB) {
+    public boolean isValidCredentialsForTesting(String password, User userFromDB) {
         if (userFromDB != null) {
             String enteredHashedPassword = hashMD5(password + userFromDB.getSalt());
             if (userFromDB.getPassword().equals(enteredHashedPassword)) {

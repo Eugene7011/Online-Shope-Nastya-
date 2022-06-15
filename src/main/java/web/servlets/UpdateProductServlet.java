@@ -1,18 +1,22 @@
 package web.servlets;
 
-import dao.jdbc.JdbcProductDao;
 import entity.Product;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import pagegenerator.PageGenerator;
+import service.ProductService;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UpdateProductServlet extends HttpServlet {
+    private ProductService productService;
+
+    public UpdateProductServlet(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -40,8 +44,7 @@ public class UpdateProductServlet extends HttpServlet {
             response.setContentType("text/html;charset=utf-8");
             Product product = new Product(id, name, price, null);
 
-            JdbcProductDao jdbcProductDao = new JdbcProductDao();
-            jdbcProductDao.update(product);
+            productService.update(product);
             response.sendRedirect("/products");
         } catch (NumberFormatException e) {
             PageGenerator pageGenerator = PageGenerator.instance();

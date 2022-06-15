@@ -15,13 +15,12 @@ public class ProductRowMapper {
 
         Timestamp creationDateTimesTemp = resultSet.getTimestamp("creation_date");
 
-        Product product = Product.builder().
+        return Product.builder().
                 id(id)
                 .name(name)
                 .price(price)
                 .creationDate(creationDateTimesTemp.toLocalDateTime())
                 .build();
-        return product;
     }
 }
 

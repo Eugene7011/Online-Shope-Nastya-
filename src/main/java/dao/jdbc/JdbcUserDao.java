@@ -1,5 +1,6 @@
 package dao.jdbc;
 
+import dao.UserDao;
 import dao.jdbc.mapper.UserRowMapper;
 import entity.User;
 
@@ -8,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JdbcUserDao implements UserDao{
+public class JdbcUserDao implements UserDao {
     private final ConnectionFactory connectionFactory = new ConnectionFactory();
     private final UserRowMapper userRowMapper = new UserRowMapper();
 
@@ -27,7 +28,7 @@ public class JdbcUserDao implements UserDao{
                 if (resultSet == null) {
                     return null;
                 }
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     return userRowMapper.mapRow(resultSet);
                 }
             }

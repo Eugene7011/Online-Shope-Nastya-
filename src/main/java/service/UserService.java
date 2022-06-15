@@ -1,16 +1,16 @@
 package service;
 
-import dao.jdbc.UserDao;
-import security.SecurityService;
+import dao.UserDao;
+import entity.User;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserService {
     private UserDao userDao;
-    private List<String> userTokens;
-    private SecurityService securityService = new SecurityService(userTokens);
 
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
+    public User search(String login) {
+        return userDao.search(login);
     }
 }
