@@ -14,11 +14,16 @@
     <script src="https://kit.fontawesome.com/332a215f17.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<h2 style=position:absolute;left:47%; >Delete product </h2>
+<h2 style=position:absolute;left:47%; >Delete product by id</h2>
 <form action="/products/delete" method="POST"  style=position:absolute;left:47%;><br><br>
     Id : <input type="text" name="id" style=position:absolute;left:6%;/ ><br><br>
     <input type="submit" name="delete" value="Delete"style=position:absolute;left:40%;/>
 </form>
+
+<form action="/products" style=position:absolute;left:20%;><br><br>
+    <input type="submit" name="return" value="Return to product list"style=position:absolute;left:40%;/>
+</form>
+
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

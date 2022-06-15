@@ -16,7 +16,7 @@ public class JdbcProductDao implements ProductDao {
     private static final String FIND_ALL_SQL = "SELECT id, name, price, creation_date FROM products;";
     private static final String ADD_SQL = "INSERT INTO products (name, price, creation_date) VALUES (?,?,?);";
     private static final String DELETE_SQL = "DELETE FROM products WHERE id=?;";
-    private static final String UPDATE_SQL = "UPDATE products SET name=?, price=?, creation_date=? WHERE id=?;";
+    private static final String UPDATE_SQL = "UPDATE products SET name=?, price=? WHERE id=?;";
     private static final String SEARCH_SQL = "SELECT id, name, price, creation_date FROM products WHERE  (name) LIKE ?;";
 
     @Override
@@ -67,10 +67,9 @@ public class JdbcProductDao implements ProductDao {
         try (Connection connection = connectionFactory.connectionToDatabase();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
 
-            preparedStatement.setLong(4, product.getId());
+            preparedStatement.setLong(3, product.getId());
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getCreationDate()));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Can not edit product from database", e);

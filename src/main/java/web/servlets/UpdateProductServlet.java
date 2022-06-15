@@ -31,24 +31,25 @@ public class UpdateProductServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        int price = Integer.parseInt(request.getParameter("price"));
-        LocalDateTime creation_date = LocalDateTime.parse(request.getParameter("creation_date"));
-
-        response.setContentType("text/html;charset=utf-8");
-        Product product = new Product(id, name, price, creation_date);
-
-        JdbcProductDao jdbcProductDao = new JdbcProductDao();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            int price = Integer.parseInt(request.getParameter("price"));
+
+            response.setContentType("text/html;charset=utf-8");
+            Product product = new Product(id, name, price, null);
+
+            JdbcProductDao jdbcProductDao = new JdbcProductDao();
             jdbcProductDao.update(product);
-        } catch (NumberFormatException e) {
-            throw new RuntimeException("Cant edit product from database");
-        }
-        try {
             response.sendRedirect("/products");
+        } catch (NumberFormatException e) {
+            PageGenerator pageGenerator = PageGenerator.instance();
+
+            String page = pageGenerator.getPage("updateproduct.html");
+            response.getWriter().write(page);
+            response.getWriter().write("Product has not been added. \n" +
+                    "Check and enter correct data in the fields");
         } catch (IOException e) {
             throw new RuntimeException("Cant show update products");
         }

@@ -27,6 +27,7 @@ public class Main {
         SecurityFilter securityFilter = new SecurityFilter(securityService);
 
         context.addServlet(new ServletHolder(new AllProductsServlet()), "/products");
+        //context.addServlet(new ServletHolder(new AllProductsServlet()), "/*");
         context.addServlet(new ServletHolder(addProductServlet), "/products/add");
         context.addServlet(new ServletHolder(new DeleteProductServlet()), "/products/delete");
         context.addServlet(new ServletHolder(new UpdateProductServlet()), "/products/update");

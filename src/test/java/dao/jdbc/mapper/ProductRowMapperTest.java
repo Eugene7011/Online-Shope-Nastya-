@@ -1,7 +1,8 @@
-package dao;
+package dao.jdbc.mapper;
 
 import dao.jdbc.mapper.ProductRowMapper;
 import entity.Product;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +11,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -38,4 +38,5 @@ public class ProductRowMapperTest {
         assertEquals(3000.00, actualProduct.getPrice());
         assertEquals(localDateTime, actualProduct.getCreationDate());
     }
+
 }

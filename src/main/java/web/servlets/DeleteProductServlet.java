@@ -31,27 +31,28 @@ public class DeleteProductServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-
-        String id = request.getParameter("id");
-
-        response.setContentType("text/html;charset=utf-8");
-
-        JdbcProductDao jdbcProductDao = new JdbcProductDao();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            String id = request.getParameter("id");
+
+            response.setContentType("text/html;charset=utf-8");
+
+            JdbcProductDao jdbcProductDao = new JdbcProductDao();
+
             jdbcProductDao.delete(Integer.parseInt(id));
-        } catch (NumberFormatException e) {
-            throw new RuntimeException("Cant remove if from database. Try to write id correctly");
-        }
-        try {
             response.sendRedirect("/products");
-        } catch (IOException e) {
-            throw new RuntimeException("Cant show page with deleted user");
+        } catch (NumberFormatException e) {
+            PageGenerator pageGenerator = PageGenerator.instance();
+
+            String page = pageGenerator.getPage("deleteproduct.html");
+            response.getWriter().write(page);
+            response.getWriter().write("Cant remove product from database. Try to write id correctly");
         }
+
         try {
             response.getWriter().close();
         } catch (IOException exception) {
-            throw new RuntimeException("Cant show update products");
+            throw new RuntimeException("Cant show updated products");
         }
     }
 

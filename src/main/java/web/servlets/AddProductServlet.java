@@ -33,19 +33,19 @@ public class AddProductServlet extends HttpServlet {
             productService.add(product);
             response.sendRedirect("/products");
 
-        } catch (IOException e) {
-            String errorMessage = "Product has not been added. Check and enter correct data in the fields";
+        } catch (IllegalArgumentException exception) {
             PageGenerator pageGenerator = PageGenerator.instance();
 
-            Map<String, Object> parameters = Map.of("errorMessage", errorMessage);
-            String page = pageGenerator.getPage("add_product.html", parameters);
+            String page = pageGenerator.getPage("add_product.html");
             response.getWriter().write(page);
+            response.getWriter().write("Product has not been added. \n" +
+                    "Check and enter correct data in the fields");
         }
     }
 
     public Product getProductFromRequest(HttpServletRequest request) {
-        return Product.builder().
-                name(request.getParameter("name"))
+        return Product.builder()
+                .name(request.getParameter("name"))
                 .price(Double.parseDouble(request.getParameter("price")))
                 .build();
     }

@@ -1,12 +1,13 @@
-package dao;
+package dao.jdbc;
 
+import dao.jdbc.JdbcProductDao;
 import entity.Product;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class JdbcProductDaoTest {
 
@@ -14,14 +15,12 @@ public class JdbcProductDaoTest {
 
     @Test
     public void testJdbcProductDaoTest() {
-        List<Product> products = jdbcProductDao.getAllProducts();
+        List<Product> products = jdbcProductDao.findAll();
 
         assertFalse(products.isEmpty());
 
         for (Product product : products) {
-            assertNotNull(product.getId());
             assertNotNull(product.getName());
-            assertNotNull(product.getPrice());
             assertNotNull(product.getCreationDate());
         }
     }

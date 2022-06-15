@@ -27,13 +27,13 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto">
                 <li class="nav-element">
-                    <a class="nav-link">Home</a>
+                    <a href="/products" class="nav-link">Home</a>
                 </li>
                 <li class="nav-element">
-                    <a href="#" class="nav-link">About us</a>
+                    <a href="/products" class="nav-link">About us</a>
                 </li>
                 <li class="nav-element">
-                    <a class="nav-link">Products</a>
+                    <a href="/products" class="nav-link">Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -41,14 +41,14 @@
                         Admin
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Add product</a></li>
-                        <li><a class="dropdown-item" href="#">Update product</a></li>
-                        <li><a class="dropdown-item" href="#">Delete product</a></li>
-                        <li><a class="dropdown-item" href="#">Search product</a></li>
+                        <li><a class="dropdown-item" href="/products/add">Add product</a></li>
+                        <li><a class="dropdown-item" href="/products/update">Update product</a></li>
+                        <li><a class="dropdown-item" href="/products/delete">Delete product</a></li>
+                        <li><a class="dropdown-item" href="/products/search">Search product</a></li>
                     </ul>
                 </li>
                 <li class="nav-element">
-                    <a href="#" class="nav-link">Sign up</a>
+                    <a href="/login" class="nav-link">Sign up</a>
                 </li>
             </ul>
             <li class="nav-element">
@@ -66,7 +66,7 @@
         <div class="row">
             <div class="text-center mx-auto col-sm-6">
                 <form class="d-flex" action="/products/search" method="GET">
-                    <input class="form-control me-2" type="search"  name="searchText" placeholder="Search product">
+                    <input class="form-control me-2" type="search"  name="searchText" placeholder="Search product by name">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
@@ -75,7 +75,8 @@
 <!-- End of search Section-->
 
 <!-- Section of products-->
-<a href="/products/add" ><button type="button" class="btn btn-primary" style=position:absolute;left:80%; >CREATE PRODUCT</button></a><br>
+<a href="/products/add" ><button type="button" class="btn btn-primary" style=position:absolute;left:80%; >CREATE PRODUCT</button></a>
+<a href="/products" ><button type="button" class="btn btn-primary" style=position:absolute;left:10%; >ALL PRODUCTS</button></a><br>
 <section class="products">
     <div class="container">
         <div class="row">
@@ -107,6 +108,7 @@
                 </td>
             </tr>
             </#list>
+
             </tbody>
         </table>
 
